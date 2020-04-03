@@ -1,5 +1,10 @@
 (ns pegthing.connections
-  (:require [pegthing.math :refer [tri triangular?]]))
+  "Connections on the board."
+  (:require
+   [clojure.spec.alpha :as s]
+   [pegthing.math :refer [tri* triangular?]]))
+
+(s/def ::position pos?)
 
 (defn in-bounds?
   "Is every position less than or equal to the max position?"
@@ -27,9 +32,12 @@
 
 (defn pos->row-num
   "Convert a position `pos` to the row number the position belongs to.
-  E.g. pos 1 is row 1; pos 2 and pos 3 are in row 2, etc"
+  E.g. pos 1 is row 1; pos 2 and pos 3 are in row 2, etc."
   [pos]
-  (inc (count (take-while #(> pos %) tri))))
+  (if-not (s/valid? ::position pos)
+    (throw (ex-info (s/explain-str ::position pos)
+                    (s/explain-data ::position pos)))
+    (inc (count (take-while #(> pos %) (tri*))))))
 
 (defn connect-down-left
   [board max-pos pos]

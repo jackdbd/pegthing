@@ -1,10 +1,6 @@
 (ns pegthing.game-rules
-  "Rules and logic for the Peg Thing game.")
-
-(defn pegged?
-  "Is the hole at position `pos` on the board `board` filled with a peg?"
-  [board pos]
-  (get-in board [pos :pegged]))
+  "Rules and logic for the Pegthing game."
+  (:require [pegthing.board :refer [connections-at-pos pegged?]]))
 
 (defn valid-moves
   "Valid moves on the board `board` for the position `pos`.
@@ -15,12 +11,15 @@
         (filter (fn [[destination jumped]]
                   (and (not (pegged? board destination))
                        (pegged? board jumped)))
-                (get-in board [pos :connections]))))
+                (connections-at-pos board pos))))
 
 (defn valid-move?
-  "Is the move from position `p1` to position `p2` valid, given that we are on
-  the board `board`?
-  Return jumped position if the move from p1 to p2 is valid, nil otherwise."
+  "Check whether the move from `p1` to `p2` is valid or not.
+  Is the move from position `p1` to position `p2` valid, given that the player
+  is playing on the board `board`?
+  A move can be valid if the peg jumps over another peg and lands in an empty
+  hole.
+  Return jumped position if the move is valid, nil otherwise."
   [board p1 p2]
   (get (valid-moves board p1) p2))
 

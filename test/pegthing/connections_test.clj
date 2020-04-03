@@ -4,6 +4,8 @@
             [pegthing.board :refer [new-board]]))
 
 (deftest position-to-row-number-conversion
+  (testing "throws an ExceptionInfo when passed a negative number"
+    (is (thrown? clojure.lang.ExceptionInfo (pos->row-num -1))))
   (testing "position 3 translates to row number 2"
     (is (= 2 (pos->row-num 3))))
   (testing "position 15 translates to row number 5"

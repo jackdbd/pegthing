@@ -1,8 +1,9 @@
 (ns pegthing.core
-  (:require [pegthing.ui :refer [prompt-rows]])
-  (:gen-class))
+  "Pegthing game from Clojure for the Brave and True"
+  (:gen-class)
+  (:require [pegthing.prompt :refer [new-game]]))
 
 (defn -main
-  [& args]
+  []
   (println "Get ready to play peg thing!")
-  (prompt-rows))
+  (new-game))
