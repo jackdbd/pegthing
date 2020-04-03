@@ -3,7 +3,7 @@
             [pegthing.board :refer [letter->pos letters new-board row-padding row-positions]]
             [pegthing.colors :refer [colorize]]
             [pegthing.game-rules :refer [can-move?]]
-            [pegthing.player :refer [make-move board-without-peg-at-pos]]))
+            [pegthing.player :refer [game make-move board-without-peg-at-pos]]))
 
 ;; we need this forward declaration to avoid an unresolved symbol.
 (declare game-loop)
@@ -25,17 +25,17 @@
          (colorize "0" :blue)
          (colorize "-" :red))))
 
-(defn render-row
-  "Render the row number `row-num` on the board `board`."
-  [board row-num]
-  (str (row-padding row-num (:rows board))
-       (string/join " " (map (partial render-pos board) (row-positions row-num)))))
+; (defn render-row
+;   "Render the row number `row-num` on the board `board`."
+;   [board row-num]
+;   (str (row-padding row-num (:rows board))
+;        (string/join " " (map (partial render-pos board) (row-positions row-num)))))
 
-(defn print-board
-  "Print the board `board` in the terminal."
-  [board]
-  (doseq [row-num (range 1 (inc (:rows board)))]
-    (println (render-row board row-num))))
+; (defn print-board
+;   "Print the board `board` in the terminal."
+;   [board]
+;   (doseq [row-num (range 1 (inc (:rows board)))]
+;     (println (render-row board row-num))))
 
 (defn string->letters
   "Convert a string to a collection consisting of each individual character."
@@ -45,16 +45,25 @@
 (defn prompt-empty-peg
   [board]
   (println "Here's your board:")
-  (print-board board)
+  ; (print-board board)
   (println "Remove which peg? [e]")
-  (game-loop (board-without-peg-at-pos board (letter->pos (get-input "e")))))
+  ; (game-loop (board-without-peg-at-pos board (letter->pos (get-input "e"))))
+  )
 
 (defn prompt-rows
   []
   (println "How many rows? [5]")
   (let [rows (Integer. (get-input 5))
         board (new-board rows)]
-    (prompt-empty-peg board)))
+    (def game-definition (game rows))
+    (def my-board (:starting-board game-definition))
+    (println "starting-board" my-board)
+    (def print-board (:print-board game-definition))
+    (println "=== MY PRINT ===")
+    (print-board my-board)
+    (println "=== END OF MY PRINT ===")
+    ; (prompt-empty-peg my-board))
+  ))
 
 (defn game-over
   "Game Over."
