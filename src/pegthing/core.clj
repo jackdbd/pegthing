@@ -1,7 +1,8 @@
 (ns pegthing.core
+  (:require [pegthing.ui :refer [prompt-rows]])
   (:gen-class))
 
 (defn -main
-  "I don't do a whole lot ... yet."
   [& args]
-  (println "Hello, World!"))
+  (println "Get ready to play peg thing!")
+  (prompt-rows))
