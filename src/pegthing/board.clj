@@ -1,6 +1,6 @@
 (ns pegthing.board
   (:require [pegthing.math :refer [tri]]
-            [pegthing.player :refer [add-pos]]))
+            [pegthing.player :refer [board-with-new-pos]]))
 
 ;; ASCII codes for a-z lowercase letters.
 (def alpha-start 97)
@@ -20,21 +20,23 @@
   (inc (- (int (first letter)) alpha-start)))
 
 (defn row-positions
-  "Return all positions in the given row"
+  "Return all positions on the row `row-num`."
   [row-num]
   (range (inc (or (row-tri (dec row-num)) 0))
          (inc (row-tri row-num))))
 
 (defn row-padding
-  "String of spaces to add to the beginning of a row to center it"
+  "String of spaces to add to the beginning of a row to center it."
   [row-num rows]
   (let [pad-length (/ (* (- rows row-num) positions-for-letter) 2)]
     (apply str (take pad-length (repeat " ")))))
 
 (defn new-board
-  [rows]
-  (let [initial-board {:rows rows}
-        max-pos (row-tri rows)]
-    (reduce (fn [board pos] (add-pos board max-pos pos))
-            initial-board
-            (range 1 (inc max-pos)))))
+  "Create a new game board with `num-rows` rows."
+  [num-rows]
+  (let [initial-board {:rows num-rows}
+        max-pos (row-tri num-rows)]
+    (defn f
+      [board pos]
+      (board-with-new-pos board max-pos pos))
+    (reduce f initial-board (range 1 (inc max-pos)))))

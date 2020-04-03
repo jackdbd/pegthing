@@ -1,6 +1,6 @@
 (ns pegthing.board-test
   (:require [clojure.test :refer [deftest is testing]]
-            [pegthing.board :refer [letter->pos new-board row-tri]]))
+            [pegthing.board :refer [letter->pos new-board row-positions row-tri]]))
 
 (deftest letter-to-position-conversion
   (testing "a translates to 1"
@@ -14,7 +14,11 @@
   (testing "the hole at position 1 is pegged and connected"
     (let [hole (get (new-board 3) 1)]
       (is (= true (:pegged hole)))
-      (is (= {4 2 6 3} (:connections hole))))))
+      (is (= {4 2, 6 3} (:connections hole))))))
+
+(deftest positions-at-nth-row
+  (testing "at row 3 the positions available are: 4, 5, 6"
+    (is (= (seq [4 5 6]) (row-positions 3)))))
 
 (deftest last-triangular-number-at-nth-row
   (testing "at row 3 is 6"

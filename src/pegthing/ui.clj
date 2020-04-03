@@ -3,7 +3,7 @@
             [pegthing.board :refer [letter->pos letters new-board row-padding row-positions]]
             [pegthing.colors :refer [colorize]]
             [pegthing.game-rules :refer [can-move?]]
-            [pegthing.player :refer [make-move remove-peg]]))
+            [pegthing.player :refer [make-move board-without-peg-at-pos]]))
 
 ;; we need this forward declaration to avoid an unresolved symbol.
 (declare game-loop)
@@ -47,7 +47,7 @@
   (println "Here's your board:")
   (print-board board)
   (println "Remove which peg? [e]")
-  (game-loop (remove-peg board (letter->pos (get-input "e")))))
+  (game-loop (board-without-peg-at-pos board (letter->pos (get-input "e")))))
 
 (defn prompt-rows
   []

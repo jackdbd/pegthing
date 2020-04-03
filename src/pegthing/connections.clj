@@ -2,12 +2,14 @@
   (:require [pegthing.math :refer [tri triangular?]]))
 
 (defn in-bounds?
-  "Is every position less than or equal the max position?"
+  "Is every position less than or equal to the max position?"
   [max-pos & positions]
   (= max-pos (apply max max-pos positions)))
 
 (defn connect
-  "Form a mutual connection between two positions"
+  "Recursively build up the final state of the board, indicating which positions
+  are connected. If the queried position `destination` is bigger than the
+  maximum available position `max-pos`, simply return the unmodified board."
   [board max-pos pos neighbor destination]
   (if (in-bounds? max-pos neighbor destination)
     (reduce (fn [new-board [p1 p2]] (assoc-in new-board [p1 :connections p2] neighbor))
