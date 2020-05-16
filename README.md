@@ -1,5 +1,7 @@
 # Peg Thing
 
+[![Build Status](https://travis-ci.com/jackdbd/pegthing.svg?branch=master)](https://travis-ci.org/jackdbd/pegthing)
+
 A game developed for the Functional Programming chapter of [Clojure for the Brave and True](https://www.braveclojure.com/functional-programming/).
 
 ![Peg Thing](https://www.braveclojure.com/assets/images/cftbat/functional-programming/peg-thing-starting.png "Peg Thing").
@@ -29,7 +31,7 @@ lein uberjar
 Then run the executable:
 
 ```sh
-java -jar target/uberjar/pegthing-0.1.0-SNAPSHOT-standalone.jar
+java -jar target/uberjar/pegthing-standalone.jar
 ```
 
 ## Tests
