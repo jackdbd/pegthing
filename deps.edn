@@ -1,0 +1,13 @@
+ {:aliases {;; for help: clojure -A:deps -T:build help/doc
+            :build {:deps {io.github.clojure/tools.build {:git/tag "v0.7.5" :git/sha "34727f7"}}
+                    :ns-default build}
+            :play {:exec-fn pegthing.core/-main}
+            :uberjar {:exec-fn build/uber
+                      :extra-deps {io.github.clojure/tools.build {:git/tag "v0.7.5" :git/sha "34727f7"}}
+                      :extra-paths ["."]}
+            :test {:extra-deps  {lambdaisland/kaocha {:mvn/version "1.60.977"}}
+                   :extra-paths ["test"]}}
+
+  :deps {org.clojure/clojure {:mvn/version "1.10.3"}}
+
+  :paths ["src"]}

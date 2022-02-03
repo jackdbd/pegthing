@@ -10,3 +10,7 @@ profiles.clj
 .hgignore
 .lein-*
 .nrepl-port
+
+.clj-kondo/
+.cpcache/
+.lsp/
